@@ -2,8 +2,8 @@ package com.example.jlipatap.popularmoviesexercise;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,9 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -127,17 +126,23 @@ public class MainActivityFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String movieJsonStr = null;
 
-
             try {
                 // Construct the URL for the API query TODO: Update this to URI
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?api_key="+ APIKey.getKey() +"&" +params[0]);
+                //URL url = new URL("http://api.themoviedb.org/3/discover/movie?api_key="+ APIKey.getKey() +"&" +params[0]);
 
+                final String MOVIES_BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
+                Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
+                        .appendQueryParameter("api_key",APIKey.getKey())
+                        .appendQueryParameter("sort_by",params[0]).build();
+                Log.d(LOG_TAG,"builtUri: "+builtUri.toString());
+
+                URL url = new URL(builtUri.toString());
 
 
                 // Create the request to TMDB and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-                Log.d(LOG_TAG, "urlConnection.connect() called" + url.toString());
+                Log.d(LOG_TAG, "urlConnection.connect() called " + url.toString());
                 urlConnection.connect();
 
                 // Read the input stream into a String
@@ -162,7 +167,7 @@ public class MainActivityFragment extends Fragment {
                     movieJsonStr = null;
                 }
                 movieJsonStr = buffer.toString();
-                Log.v(LOG_TAG, movieJsonStr); //Comment this out when done.  This is going to be huge.
+                Log.d(LOG_TAG, movieJsonStr); //Comment this out when done.  This is going to be huge.
 
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
@@ -181,7 +186,28 @@ public class MainActivityFragment extends Fragment {
                     }
                 }
             }
-        return null;
+
+            try
+            {
+                JSONObject mainJsonStrObject = new JSONObject(movieJsonStr);
+                JSONArray jsonArray = mainJsonStrObject.getJSONArray("results");
+                String[] moviePosterPaths = new String[jsonArray.length()];
+                Log.d(LOG_TAG,"mainJsonStrObject + array + moviePosterPaths created");
+
+                for(int i=0; i<jsonArray.length(); i++){
+                    JSONObject childJsonObject = jsonArray.getJSONObject(i);
+                    moviePosterPaths[i] = childJsonObject.getString("poster_path");
+                    Log.d(LOG_TAG,"moviePosterPaths "+i+" "+moviePosterPaths[i]);
+                }
+
+            } catch(JSONException e){
+                Log.e(LOG_TAG,"JSON ERROR",e);
+                e.printStackTrace();
+
+            }
+
+
+            return null;
         }
 
     }
