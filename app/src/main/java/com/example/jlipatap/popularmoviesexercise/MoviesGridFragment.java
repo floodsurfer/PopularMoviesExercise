@@ -62,8 +62,9 @@ public class MoviesGridFragment extends Fragment {
 
         //Get SharedPreferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mMovieSortSetting = sharedPref.getString("pref_sortSetting", "NULL");
+        mMovieSortSetting = sharedPref.getString(getString(R.string.pref_sortSetting_key), getString(R.string.pref_sortSetting_default));
         Log.d(LOG_TAG, "sharedPrefMovieSortSetting = " + mMovieSortSetting);
+
 
         //Get movies from API and display to GridView
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
@@ -79,15 +80,7 @@ public class MoviesGridFragment extends Fragment {
     public void onResume(){
         super.onResume();
 
-        //Get SharedPreferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mMovieSortSetting = sharedPref.getString("pref_sortSetting", "NULL");
-        Log.d(LOG_TAG, "sharedPrefMovieSortSetting = " + mMovieSortSetting);
 
-
-        //Get movies from API and display to GridView
-        FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
-        fetchMoviesTask.execute(mMovieSortSetting);
     }
 
 
@@ -148,7 +141,7 @@ public class MoviesGridFragment extends Fragment {
 
             //Get SharedPreferences
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            mMovieSortSetting = sharedPref.getString("pref_sortSetting", "NULL");
+            mMovieSortSetting = sharedPref.getString(getString(R.string.pref_sortSetting_key), getString(R.string.pref_sortSetting_default));
             Log.d(LOG_TAG, "sharedPrefMovieSortSetting = " + mMovieSortSetting);
 
             //Fetch movies from API and display to GridView
@@ -244,7 +237,7 @@ public class MoviesGridFragment extends Fragment {
                 for(int i=0; i< mJsonArray.length(); i++){
                     JSONObject childJsonObject = mJsonArray.getJSONObject(i);
                     mMoviePosterPaths[i] = childJsonObject.getString("poster_path");
-                    Log.d(LOG_TAG, "mMoviePosterPaths "+i+" "+ mMoviePosterPaths[i]);
+                    //Log.d(LOG_TAG, "mMoviePosterPaths "+i+" "+ mMoviePosterPaths[i]);
                 }
             } catch(JSONException e){
                 Log.e(LOG_TAG,"JSON ERROR",e);

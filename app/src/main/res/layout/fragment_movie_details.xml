@@ -1,15 +1,99 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.jlipatap.popularmoviesexercise.MovieDetailsActivityFragment">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.jlipatap.popularmoviesexercise.MovieDetailsActivityFragment"
+    >
 
     <TextView
-        android:id="@+id/hello_world"
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/moviedetails_movietitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textColor="#ffffff"
+        android:background="#00936E"
+        android:text="Movie Name"/>
 
-</RelativeLayout>
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+               android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/moviedetails_posterimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dummy"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="48dp">
+
+                    <TextView
+                        android:id="@+id/moviedetails_releasedate"
+                        android:text="2015"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/abc_text_size_medium_material"
+                        android:paddingBottom="8dp"
+                        />
+
+                    <!-- This element may not be required
+                    <TextView
+                        android:id="@+id/moviedetails_runtime"
+                        android:text="90 mins"
+                        android:textStyle="italic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/abc_text_size_medium_material"
+                        android:paddingBottom="8dp"
+                        />
+                        -->
+
+                    <TextView
+                        android:id="@+id/moviedetails_userrating"
+                        android:text="8.1/10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <!-- For Stage 2 -->
+                    <!--
+                    <Button
+                        android:id="@+id/moviedetails_favoritebutton"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/star" />
+                        -->
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/moviedetails_plotsynopsis"
+                android:text="plot synopsis plot synopsis plot synopsis plot synopsis plot synopsis plot synopsis plot synopsis"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"    />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
