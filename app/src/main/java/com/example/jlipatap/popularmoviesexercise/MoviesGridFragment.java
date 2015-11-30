@@ -286,7 +286,8 @@ public class MoviesGridFragment extends Fragment {
             if (convertView == null) {
                 // if it's not recycled, initialize some attributes
                 imageView = new ImageView(mContext);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setAdjustViewBounds(true);
             } else {
                 imageView = (ImageView) convertView;
             }
@@ -298,7 +299,7 @@ public class MoviesGridFragment extends Fragment {
                        + mMoviePosterPaths[position];
                 //Log.d(LOG_TAG, imageUrl);
 
-                //Log.d(LOG_TAG,"Picasso() "+imageUrl);
+                Log.d(LOG_TAG,"Picasso() "+imageUrl);
 
                 Picasso.with(mContext)
                     .load(imageUrl)//.resize(185*2,278*2)
