@@ -1,2 +1,2 @@
 # PopularMoviesExercise
-Udacity Project #1
+Udacity course "Developing Android Apps" Project #1
