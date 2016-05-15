@@ -1,10 +1,12 @@
-package com.example.jlipatap.popularmoviesexercise;
+package com.example.jlipatap.popularmoviesexercise.ui;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.example.jlipatap.popularmoviesexercise.R;
 
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {

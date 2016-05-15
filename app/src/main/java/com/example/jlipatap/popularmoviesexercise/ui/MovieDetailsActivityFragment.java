@@ -1,4 +1,4 @@
-package com.example.jlipatap.popularmoviesexercise;
+package com.example.jlipatap.popularmoviesexercise.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,15 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jlipatap.popularmoviesexercise.R;
+import com.example.jlipatap.popularmoviesexercise.api.TmdbApi;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-/**
- * A placeholder fragment containing a simple view.
- */
 public class MovieDetailsActivityFragment extends Fragment {
 
     String LOG_TAG = "MovieDetailsActivityFragment";
@@ -69,7 +67,7 @@ public class MovieDetailsActivityFragment extends Fragment {
             uiPlotSynopsis.setText(mJsonObject.getString("overview"));
 
             //Update ImageView
-            String imageUrl = TmdbApiHandler.TMDB_GETIMAGE_BASEURL + TmdbApiHandler.TMDB_IMAGE_SIZE
+            String imageUrl = TmdbApi.TMDB_GETIMAGE_BASEURL + TmdbApi.TMDB_IMAGE_SIZE
                     + mJsonObject.getString("poster_path");
             Log.d(LOG_TAG, "imageURL = "+imageUrl);
             Picasso.with(getActivity())
@@ -78,6 +76,11 @@ public class MovieDetailsActivityFragment extends Fragment {
         } catch (JSONException e) {
             Log.e(LOG_TAG, "JSON ERROR", e);
             e.printStackTrace();
+            Util.showToast("JSON ERROR", getActivity());
+        } catch (StringIndexOutOfBoundsException e){
+            Log.e(LOG_TAG, "ERROR", e);
+            Util.showToast("JSON ERROR", getActivity());
+
         }
 
         return rootView;

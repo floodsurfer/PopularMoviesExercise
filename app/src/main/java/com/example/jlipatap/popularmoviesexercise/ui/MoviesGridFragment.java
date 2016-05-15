@@ -1,4 +1,4 @@
-package com.example.jlipatap.popularmoviesexercise;
+package com.example.jlipatap.popularmoviesexercise.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.jlipatap.popularmoviesexercise.R;
 import com.example.jlipatap.popularmoviesexercise.api.TmdbApi;
 import com.example.jlipatap.popularmoviesexercise.model.ApiResponse;
 import com.example.jlipatap.popularmoviesexercise.model.Result;
@@ -62,7 +63,7 @@ public class MoviesGridFragment extends Fragment {
 
         // Get movie data from TMDB API
         mTmdbApi = new TmdbApi(this);
-        mTmdbApi.getMovies(mMovieSortSetting);
+        //mTmdbApi.getMovies(mMovieSortSetting);
 
     }
 
@@ -99,7 +100,7 @@ public class MoviesGridFragment extends Fragment {
                 if(movieItem!=null) {
                     Intent showMovieDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
 
-                    // Serialize movieItem
+                    // Serialize movieItem to JSON, put as String into Intent and launch DetailsActivity
                     String movieItemJSON = new Gson().toJson(movieItem);
 
                     showMovieDetailsIntent.putExtra("jsonString", movieItemJSON);
@@ -135,20 +136,12 @@ public class MoviesGridFragment extends Fragment {
             mMovieSortSetting = sharedPref.getString(getString(R.string.pref_sortSetting_key), getString(R.string.pref_sortSetting_default));
             Log.d(LOG_TAG, "sharedPrefMovieSortSetting = " + mMovieSortSetting);
 
-            //Fetch movies from API and display to GridView
-            //FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
-            //fetchMoviesTask.execute(mMovieSortSetting);
-
-
+            // Get movie data from API
+            mTmdbApi.getMovies(mMovieSortSetting);
         }
 
         return super.onOptionsItemSelected(item);
 
-    }
-
-    // UI control methods
-    public void showToast(String text){
-        Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
     }
 
     public void setMovies(ApiResponse apiResponse){
@@ -201,7 +194,7 @@ public class MoviesGridFragment extends Fragment {
 
             if(moviePosterPath!=null) {
 
-                String url = TmdbApiHandler.TMDB_GETIMAGE_BASEURL + TmdbApiHandler.TMDB_IMAGE_SIZE
+                String url = TmdbApi.TMDB_GETIMAGE_BASEURL + TmdbApi.TMDB_IMAGE_SIZE
                         + moviePosterPath;
 
                 Log.d(LOG_TAG,"Picasso() "+url);

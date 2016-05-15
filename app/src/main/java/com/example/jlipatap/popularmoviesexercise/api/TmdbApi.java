@@ -2,8 +2,9 @@ package com.example.jlipatap.popularmoviesexercise.api;
 
 import android.util.Log;
 
-import com.example.jlipatap.popularmoviesexercise.MoviesGridFragment;
 import com.example.jlipatap.popularmoviesexercise.model.ApiResponse;
+import com.example.jlipatap.popularmoviesexercise.ui.MoviesGridFragment;
+import com.example.jlipatap.popularmoviesexercise.ui.Util;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,8 +19,10 @@ public class TmdbApi {
 
     private static final String LOG_TAG = TmdbApi.class.getSimpleName();
 
+    // API strings
     public static final String BASE_URL = "http://api.themoviedb.org/";
-
+    public static String TMDB_GETIMAGE_BASEURL = "http://image.tmdb.org/t/p/";
+    public static String TMDB_IMAGE_SIZE = "w342";
     public static String TMDB_SORT_BY_POPULARITY = "popularity.desc";
     public static String TMDB_SORT_BY_RATING = "vote_average.desc";
 
@@ -53,15 +56,13 @@ public class TmdbApi {
                 mMoviesGridFragment.setMovies(apiResponse);
                 mMoviesGridFragment.updateAdapter();
 
-                //mMoviesGridFragment.showToast(tellUser);
-
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Log.e(LOG_TAG, "Retrofit failure");
 
-                mMoviesGridFragment.showToast("API failure");
+                Util.showToast("API failure", mMoviesGridFragment.getActivity());
 
             }
         });
