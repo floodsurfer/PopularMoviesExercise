@@ -1,8 +1,7 @@
 package com.example.jlipatap.popularmoviesexercise;
 
-/**
- * Created by jlipatap on 7/18/15.
- */
+import com.example.jlipatap.popularmoviesexercise.api.APIKey;
+
 public class TmdbApiHandler {
 
     public static String TMDB_GETMOVIES_BASEURL = "http://api.themoviedb.org/3/discover/movie?";
